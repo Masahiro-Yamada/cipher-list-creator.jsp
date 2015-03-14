@@ -7,10 +7,10 @@ put cipher-list-creator.jsp into your Tomcat ,and execute it.
 ## Target Environment
 Tomcat + JDK using NIO/BIO connector for SSL.
 Tested on Tomcat 7 + Java7, but written as Tomcat 4.1 + JDK1.4.2 compatible.
-## Restrictions
+## Notice
 Order of cipher names is **not sorted** by cipher strength.
 ## JCE Unlimited Strength Jurisdiction Policy Files
-To Enable 256 bit AES ciphers, install JCE Unlimited Strength Jurisdiction Policy Files from [Java SE Downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+To enable 256 bit AES ciphers, install JCE Unlimited Strength Jurisdiction Policy Files from [Java SE Downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 ## See also
 Almost of hints are here. 
 
