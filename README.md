@@ -19,5 +19,5 @@ Almost of hints are here.
 [Tomcat wiki : HowTo/SSLCiphers](http://wiki.apache.org/tomcat/HowTo/SSLCiphers)
 
 Detail of DHE Ephemeral key problem is here.
-  [Oracle community : JSSE - How to configure Diffie-Hellmann (DH) parameters for ssl-handhake](https://community.oracle.com/thread/1533751)
-  [OpenJDK : Commit to enable 1024 bt DHE Ephemeral key](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
+- [Oracle community : JSSE - How to configure Diffie-Hellmann (DH) parameters for ssl-handhake](https://community.oracle.com/thread/1533751)
+- [OpenJDK : Commit to enable 1024 bt DHE Ephemeral key](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
