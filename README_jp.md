@@ -1,24 +1,24 @@
-# cipher-list-creator.jsp
-Tomcat ‚Ì NIO/BIOƒRƒlƒNƒ^—p‚É server.xml ‚Éİ’è‚·‚é ciphers ‚Ìƒf[ƒ^‚ğ¶¬‚µ‚Ü‚·B
-## ƒ‰ƒCƒZƒ“ƒX
-MITƒ‰ƒCƒZƒ“ƒX‚Æ‚µ‚Ü‚·B
-## g‚¢•û
-Tomcat ‚É cipher-list-creator.jsp ‚ğ”z’u‚µ‚ÄÀs‚µ‚Ü‚·B
-## ‘ÎÛ‚ÌŠÂ‹«
-Tomcat + JDK ‚Å@NIO/BIO ƒRƒlƒNƒ^‚ğSSL‚Ég—p‚µ‚Ä‚¢‚éŠÂ‹«B
-Tomcat 7 + Java 7 ‚ÅƒeƒXƒg‚µ‚Ü‚µ‚½‚ªATomcat 4.1 + JDK1.4.2 ŒİŠ·‚ÌƒR[ƒh‚Æ‚µ‚Ä‚ ‚è‚Ü‚·B
-## ’ˆÓ–€
-ˆÃ†‚ÌƒŠƒXƒg‚ÍˆÃ†‹­“x‡‚É‚Íƒ\[ƒg‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ
-## JCE‚Ì –³§ŒÀ‹­“x‚ÌŠÇŠƒ|ƒŠƒV[ƒtƒ@ƒCƒ‹
-AES‚Ì256ƒrƒbƒgˆÃ†‚ğg—p‚·‚é‚É‚ÍAJCE Unlimited Strength Jurisdiction Policy Files ‚ğ [Java SE Downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) ‚©‚ç
-ƒ_ƒEƒ“ƒ[ƒhsèƒCƒ“ƒXƒg[ƒ‹‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
-## Ql
-‚Ù‚Æ‚ñ‚Ç‚Ìƒqƒ“ƒg‚ÍˆÈ‰º‚ÌƒTƒCƒg‚©‚ç“¾‚½‚à‚Ì‚Å‚·B
+ï»¿# cipher-list-creator.jsp
+Tomcat ã® NIO/BIOã‚³ãƒã‚¯ã‚¿ç”¨ã« server.xml ã«è¨­å®šã™ã‚‹ ciphers ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
+## ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
+MITãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã¨ã—ã¾ã™ã€‚
+## ä½¿ã„æ–¹
+Tomcat ã« cipher-list-creator.jsp ã‚’é…ç½®ã—ã¦å®Ÿè¡Œã—ã¾ã™ã€‚
+## å¯¾è±¡ã®ç’°å¢ƒ
+Tomcat + JDK ã§ã€€NIO/BIO ã‚³ãƒã‚¯ã‚¿ã‚’SSLã«ä½¿ç”¨ã—ã¦ã„ã‚‹ç’°å¢ƒã€‚
+Tomcat 7 + Java 7 ã§ãƒ†ã‚¹ãƒˆã—ã¾ã—ãŸãŒã€Tomcat 4.1 + JDK1.4.2 äº’æ›ã®ã‚³ãƒ¼ãƒ‰ã¨ã—ã¦ã‚ã‚Šã¾ã™ã€‚
+## æ³¨æ„äº‹é …
+æš—å·ã®ãƒªã‚¹ãƒˆã¯æš—å·å¼·åº¦é †ã«ã¯ã‚½ãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“
+## JCEã® ç„¡åˆ¶é™å¼·åº¦ã®ç®¡è½„ãƒãƒªã‚·ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«
+AESã®256ãƒ“ãƒƒãƒˆæš—å·ã‚’ä½¿ç”¨ã™ã‚‹ã«ã¯ã€JCE Unlimited Strength Jurisdiction Policy Files ã‚’ [Java SE Downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) ã‹ã‚‰
+ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰sæ‰‹ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+## å‚è€ƒ
+ã»ã¨ã‚“ã©ã®ãƒ’ãƒ³ãƒˆã¯ä»¥ä¸‹ã®ã‚µã‚¤ãƒˆã‹ã‚‰å¾—ãŸã‚‚ã®ã§ã™ã€‚
 
 ["SSL/TLS, ciphers, perfect forward secrecy and Tomcat" by Mike Noordermeer on Eveoh blog.](https://blog.eveoh.nl/2014/02/tls-ssl-ciphers-pfs-tomcat/)
 
 [Tomcat wiki : HowTo/SSLCiphers](http://wiki.apache.org/tomcat/HowTo/SSLCiphers)
 
-DHE Ephemeral key ‚Ì–â‘è
+DHE Ephemeral key ã®å•é¡Œ
 - [Oracle community : JSSE - How to configure Diffie-Hellmann (DH) parameters for ssl-handhake](https://community.oracle.com/thread/1533751)
-- [OpenJDK ‚Å 1024 bit DHE Ephemeral key‚ğ—LŒø‚É‚·‚éƒRƒ~ƒbƒg](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
+- [OpenJDK ã§ 1024 bit DHE Ephemeral keyã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‚³ãƒŸãƒƒãƒˆ](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
