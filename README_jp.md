@@ -11,7 +11,7 @@ Tomcat 7 + Java 7 でテストしましたが、Tomcat 4.1 + JDK1.4.2 互換の�
 暗号のリストは暗号強度順にはソートされていません
 ## JCEの 無制限強度の管轄ポリシーファイル
 AESの256ビット暗号を使用するには、JCE Unlimited Strength Jurisdiction Policy Files を [Java SE Downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) から
-ダウンロードs手インストールする必要があります。
+ダウンロードしてインストールする必要があります。
 ## 参考
 ほとんどのヒントは以下のサイトから得たものです。
 
