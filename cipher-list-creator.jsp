@@ -1,7 +1,4 @@
 ﻿<%--
-
-cipher-list-creator.jsp  Ver.2.0
-
 This code is licenced by MIT License
 All hints are described in following:
 
@@ -288,7 +285,7 @@ SOFTWARE.
 %>
     </p>
     <h1>server.xml config:</h1>
-    <code><%= wk.toString() %></code>
+    <textarea cols=80 rows=10 readonly><%= wk.toString() %></textarea>
     <p><a href="<%= response.encodeURL(request.getRequestURI()) %>">back</a>
     <% if ((!disableAES256) && !aes256Found) {%>
     <h1>AES256</h1>
