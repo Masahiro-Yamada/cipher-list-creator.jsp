@@ -1,4 +1,7 @@
 ﻿<%--
+
+cipher-list-creator.jsp  Ver.2.0
+
 This code is licenced by MIT License
 All hints are described in following:
 
@@ -38,7 +41,8 @@ SOFTWARE.
 --%><%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     session="false"
-    import="java.util.HashMap"
+    import="java.util.Arrays"
+    import="java.util.Comparator"
     import="javax.net.ssl.SSLServerSocketFactory"
 %><%!
     /** DHE ephemeral key size is weak or secure */
@@ -93,22 +97,6 @@ SOFTWARE.
                     </select>
                 </td>
             </tr>
-            <tr><th>DH (optional)</th>
-                <td>
-                    <select name="DH">
-                        <option value="Disable">Disable</option>
-                        <option value="Enable">Enable</option>
-                    </select>
-                </td>
-            </tr>
-            <tr><th>ECDH (optional)</th>
-                <td>
-                    <select name="ECDH">
-                        <option value="Disable">Disable</option>
-                        <option value="Enable">Enable</option>
-                    </select>
-                </td>
-            </tr>
             <tr><th>AES 256bit (optional)</th>
                 <td>
                     <select name="AES256">
@@ -136,8 +124,6 @@ SOFTWARE.
     <p>
 <%       
         final String paramDHE = request.getParameter("DHE");
-        final String paramECDH = request.getParameter("ECDH");
-        final String paramDH = request.getParameter("DH");
         final String paramAES256 = request.getParameter("AES256");
         final String paramLegacy = request.getParameter("legacy");
         //DHE
@@ -149,10 +135,6 @@ SOFTWARE.
                 disableDHE = false;
             }
         }
-        //ECDH
-        final boolean disableECDH = (paramECDH == null) || !paramECDH.equals("Enable");
-        //DH
-        final boolean disableDH = (paramDH == null) || !paramDH.equals("Enable");
         //AES256
         final boolean disableAES256 = (paramAES256 == null) || !paramAES256.equals(paramAES256);
         //Legacy
@@ -166,9 +148,9 @@ SOFTWARE.
         } else {
             xpCompatibleCipherName = null;
         }
-
-       
         final String[] availableCiphers = ((SSLServerSocketFactory)SSLServerSocketFactory.getDefault()).getSupportedCipherSuites();
+        final String[] selectedCiphers = new String[availableCiphers.length];
+        int selectedCount = 0;
         boolean first = true;
         StringBuffer wk = new StringBuffer();
         boolean aes256Found = false;
@@ -178,8 +160,9 @@ SOFTWARE.
             if (cipherName.contains("_AES_256_")) {
                 aes256Found = true;
             }
-           
-            //1.Disable weak ciphers
+            //1.Filter ciphers
+
+            //1.1.Disable weak ciphers
             if (cipherName.contains("_NULL_")) continue;
             if (cipherName.contains("_EXPORT")) continue; // EXPORT and EXPORT1024
             if (cipherName.contains("_DES_")) continue; // Single DES
@@ -188,25 +171,104 @@ SOFTWARE.
                 if (!cipherName.equals(xpCompatibleCipherName)) continue;
             }
            
-            //2.Disable weak hash key MD5
+            //1.2.Disable weak hash key MD5
             if (cipherName.contains("_MD5")) continue;
-            //3.Disable ANON Server Authentification
+            //1.3.Disable ANON Server Authentification
             if (cipherName.contains("_anon_")) continue;
        
-            //4.Not used Key Exchange
+            //1.4.Not used Key Exchange
             if (cipherName.contains("_DSS_")) continue; // DSS (not needed for RSA certificate)
             if (cipherName.contains("_ECDSA_")) continue; // ECDSA (not needed for RSA certificate)
             if (cipherName.contains("_KRB5_")) continue; // KRB5 (not used)
-            //5.Skip dummy cipher
+            if (cipherName.contains("_ECDH_")) continue;
+            if (cipherName.contains("_DH_")) continue;
+            //1.5.Skip dummy cipher
             if (cipherName.equals("TLS_EMPTY_RENEGOTIATION_INFO_SCSV")) continue;
    
-            //6.Optional Cipher
+            //1.6.Optional Cipher
             if (disableAES256 && cipherName.contains("_AES_256_")) continue;
-            //7.Optional Key Exchange
+            //1.7.Optional Key Exchange
             if (disableDHE && cipherName.contains("_DHE_")) continue;
-            if (disableECDH && cipherName.contains("_ECDH_")) continue;
-            if (disableDH && cipherName.contains("_DH_")) continue;
            
+            selectedCiphers[selectedCount++] = cipherName;
+        }
+        //2. Sort
+        Comparator c = new Comparator() {
+             public int compare(Object o1, Object o2) {
+                 if (o1 == null) {
+                      return (o2 == null) ? 0 : 1;
+                 }
+                 if (o2 == null) return -1;
+                 String s1 = (String)o1;
+                 String s2 = (String)o2;
+
+                 //2.1. Key Exchange
+                 //2.1.1.ECDHE highest
+                 if (s1.contains("_ECDHE_")) {
+                      if (!s2.contains("_ECDHE_")) return -1;
+                 } else if (s2.contains("_ECDHE_")) {
+                      return 1;
+                 }
+                 //2.1.2 DHE Second
+                 if (s1.contains("_DHE_")) {
+                      if (!s2.contains("_DHE_")) return -1;
+                 } else if (s2.contains("_DHE_")) {
+                      return 1;
+                 }
+
+                 //2.2.Cipher
+                 //2.2.1. Weak Windows XP compatible ciphers
+                 if (s1.contains("_RC4_")) {
+                      if (!s2.contains("_RC4_")) return 1;
+                 } else if (s2.contains("_RC4_")) {
+                      return -1;
+                 }
+                 if (s1.contains("_3DES_")) {
+                      if (!s2.contains("_3DES_")) return 1;
+                 } else if (s2.contains("_3DES_")) {
+                      return -1;
+                 }
+
+                 //2.2.2 AES128 is most recommended
+                 if (s1.contains("_AES_128_")) {
+                      if (!s2.contains("_AES_128_")) return -1;
+                 } else if (s2.contains("_AES_128_")) {
+                      return 1;
+                 }
+                 //2.2.3 AES256 is secondary recommended
+                 if (s1.contains("_AES_128_")) {
+                      if (!s2.contains("_AES_128_")) return -1;
+                 } else if (s2.contains("_AES_128_")) {
+                      return 1;
+                 }
+                 //2.2.4 GCM is stronger than CBC
+                 if (s1.contains("_GCM_") && s2.contains("_CBC_")) return -1;
+                 if (s2.contains("_GCM_") && s1.contains("_CBC_")) return 1;
+
+
+                 //2.3. Message digest
+                 //2.3.1 SHA256 is most recommended
+                 if (s1.contains("SHA256")) {
+                      if (!s2.contains("SHA256")) return -1;
+                 } else if (s2.contains("SHA256")) {
+                      return 1;
+                 }
+                 //2.3.2 SHA-1 is secondary recommended
+                 if (s1.endsWith("SHA")) {
+                      if (!s2.endsWith("SHA")) return -1;
+                 } else if (s2.endsWith("SHA")) {
+                      return 1;
+                 }
+                 return 0;
+             }
+             public boolean equals(Object obj) {
+                 return (obj == this);
+             }
+        };
+        Arrays.sort(selectedCiphers, 0, selectedCount, c);
+        for (int i = 0; i < selectedCount; i++) {
+            final String cipherName = selectedCiphers[i];
+
             if (first) {
                 wk.append("cipher=\"");
                 first = false;
