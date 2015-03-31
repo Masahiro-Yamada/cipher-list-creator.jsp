@@ -24,7 +24,7 @@ Detail of DHE Ephemeral key problem is here.
 - [OpenJDK : Commit to enable 1024 bit DHE Ephemeral key](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
 
 ## History
-Ver.1.0 : first release
-Ver.2.0 : Sorting cipher list is supported (issue 2)
+- Ver.1.0 : first release
+- Ver.2.0 : Sorting cipher list is supported (issue 2)
 
 

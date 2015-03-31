@@ -24,5 +24,5 @@ DHE Ephemeral key の問題
 - [OpenJDK で 1024 bit DHE Ephemeral keyを有効にするコミット](http://hg.openjdk.java.net/jdk8/jdk8/jdk/rev/0d5f4f1782e8)
 
 ##履歴
-Ver.1.0 : 初版
-Ver.2.0 : 並び替えを追加 (issue 2)
+- Ver.1.0 : 初版
+- Ver.2.0 : 並び替えを追加 (issue 2)
